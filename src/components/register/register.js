@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./register.css";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const Register = () => {
+  let history = useHistory();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -23,7 +25,12 @@ const Register = () => {
     if (name && email && password && password == reEnterPassword) {
       axios
         .post("http://localhost:9002/register", user)
-        .then((res) => console.log(res));
+        .then((res) => {
+          alert(res.data.message)
+          history.push("/login")
+
+        
+        });
     } else {
       alert("invalid input");
     }
@@ -65,7 +72,7 @@ const Register = () => {
           Register
         </div>
         <div>or</div>
-        <div className="button">login</div>
+        <div className="button" onClick={() => history.push("/login")}>login</div>
       </div>
     </>
   );
